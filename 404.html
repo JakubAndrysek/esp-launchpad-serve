@@ -1,5 +1,42 @@
 <html>
+  <head>
+    <style>
+      .file-content {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px 0;
+        white-space: pre-wrap;
+        font-family: monospace;
+        max-height: 500px;
+        overflow-y: auto;
+      }
+      .back-button {
+        margin: 10px 0;
+      }
+    </style>
+  </head>
   <body>
+    <script>
+      async function viewFile(downloadUrl, fileName) {
+        try {
+          const response = await fetch(downloadUrl);
+          const content = await response.text();
+
+          const htmlString = `
+            <div class="back-button">
+              <button onclick="location.reload()">← Back to directory listing</button>
+            </div>
+            <h2>File: ${fileName}</h2>
+            <div class="file-content">${content}</div>
+          `;
+
+          document.getElementsByTagName('body')[0].innerHTML = htmlString;
+        } catch (error) {
+          alert('Error loading file: ' + error.message);
+        }
+      }
+    </script>
     <script>
       (async () => {
         // Base paths for the GitHub Pages site
@@ -27,7 +64,12 @@
         for (let file of data) {
           const fileUrl = file.type === 'dir' ? `${baseUrl}${file.path}/` : `${baseUrl}${file.path}`;
           const displayName = file.type === 'dir' ? `${file.name}/` : file.name;
-          htmlString += `<li><a href="${fileUrl}">${displayName}</a></li>`;
+
+          if (file.type === 'dir') {
+            htmlString += `<li><a href="${fileUrl}">${displayName}</a></li>`;
+          } else {
+            htmlString += `<li><a href="${fileUrl}">${displayName}</a> [<a href="#" onclick="viewFile('${file.download_url}', '${file.name}'); return false;">view</a>]</li>`;
+          }
         }
 
         htmlString += '</ul>';
