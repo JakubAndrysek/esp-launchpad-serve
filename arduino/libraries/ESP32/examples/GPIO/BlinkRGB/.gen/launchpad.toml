@@ -1,0 +1,12 @@
+esp_toml_version = 1.0
+
+firmware_images_url = "https://jakubandrysek.github.io/esp-launchpad-serve/arduino/libraries/ESP32/examples/GPIO/BlinkRGB/.gen"
+
+description = "BlinkRGB example for ESP32 boards"
+
+# Apps that you support and for which the binaries are available to publish.
+supported_apps = ["BlinkRGB"]
+
+image.esp32 = "BlinkRGB-esp32.bin"
+image.esp32-s2 = "BlinkRGB-esp32-s2.bin"
+image.esp32-s3 = "BlinkRGB-esp32-s3.bin"
