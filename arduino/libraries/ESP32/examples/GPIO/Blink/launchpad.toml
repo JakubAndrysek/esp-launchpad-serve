@@ -5,5 +5,7 @@ firmware_images_url = "https://docs.espressif.com/projects/arduino-esp32-wokwi-t
 # Apps that you support and for which the binaries are available to publish.
 supported_apps = ["Blink"]
 
+[Blink]
+chipsets = ["ESP32", "ESP32-S3"]
 image.esp32 = "esp32/Blink.ino.merged.bin"
 image.esp32-s3 = "esp32s3/Blink.ino.merged.bin"
